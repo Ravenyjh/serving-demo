@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>0G Serving Provider Broker API</title>
+  <title>0G Serving System Provider Broker API</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta charset="UTF-8" />
@@ -1067,7 +1067,7 @@ ul.nav-tabs {
       <div id="content">
         <div id="project">
           <div class="pull-left">
-            <h1>0G Serving Provider Broker API</h1>
+            <h1>0G Serving System Provider Broker API</h1>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -1120,7 +1120,7 @@ ul.nav-tabs {
                           <div class="tab-pane active" id="examples-Request-listRequest-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8081/v1/request?processed=true"
+ "http://localhost:8080/v1/request?processed=true"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Request-listRequest-0-java">
@@ -1487,7 +1487,7 @@ Processed
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Service-deleteService-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X DELETE \
- "http://localhost:8081/v1/service/{service}"
+ "http://localhost:8080/v1/service/{service}"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Service-deleteService-0-java">
@@ -1833,7 +1833,7 @@ Service name
                           <div class="tab-pane active" id="examples-Service-getService-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8081/v1/service/{service}"
+ "http://localhost:8080/v1/service/{service}"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Service-getService-0-java">
@@ -2199,7 +2199,7 @@ Service name
                           <div class="tab-pane active" id="examples-Service-listService-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8081/v1/service"
+ "http://localhost:8080/v1/service"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Service-listService-0-java">
@@ -2523,7 +2523,7 @@ pub fn main() {
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Service-registerService-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
- "http://localhost:8081/v1/service" \
+ "http://localhost:8080/v1/service" \
  -d ''
 </code></pre>
                           </div>
@@ -2888,7 +2888,7 @@ $(document).ready(function() {
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Service-syncServices-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
- "http://localhost:8081/v1/sync-service"
+ "http://localhost:8080/v1/sync-service"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Service-syncServices-0-java">
@@ -3192,7 +3192,7 @@ pub fn main() {
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Service-updateService-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X PUT \
- "http://localhost:8081/v1/service/{service}" \
+ "http://localhost:8080/v1/service/{service}" \
  -d ''
 </code></pre>
                           </div>
@@ -3601,7 +3601,7 @@ $(document).ready(function() {
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Settle-settleFees-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
- "http://localhost:8081/v1/settle"
+ "http://localhost:8080/v1/settle"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Settle-settleFees-0-java">
@@ -3909,7 +3909,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-User-getUserAccount-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8081/v1/user/{user}"
+ "http://localhost:8080/v1/user/{user}"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-User-getUserAccount-0-java">
@@ -4275,7 +4275,7 @@ User address
                           <div class="tab-pane active" id="examples-User-listUserAccount-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8081/v1/user"
+ "http://localhost:8080/v1/user"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-User-listUserAccount-0-java">
@@ -4599,7 +4599,7 @@ pub fn main() {
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-User-syncUserAccount-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
- "http://localhost:8081/v1/user/{user}/sync"
+ "http://localhost:8080/v1/user/{user}/sync"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-User-syncUserAccount-0-java">
@@ -4944,7 +4944,7 @@ User address
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-User-syncUserAccounts-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
- "http://localhost:8081/v1/sync-account"
+ "http://localhost:8080/v1/sync-account"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-User-syncUserAccounts-0-java">
