@@ -5,7 +5,8 @@ import React, { useReducer, useState } from "react";
 const ConversationVerification: React.FC<{
   chatHistory: any[];
   serviceName: string;
-}> = ({ chatHistory, serviceName }) => {
+  url: string;
+}> = ({ chatHistory, serviceName, url }) => {
   // Verify
   const [selectedChatHistoryItemID, setSelectedChatHistoryItemID] =
     useState<string>();
@@ -35,15 +36,12 @@ const ConversationVerification: React.FC<{
   };
 
   const handleGetSig = (chatID: string) => {
-    fetch(
-      `http://192.168.2.142:8080/v1/proxy/${serviceName}/signature/${chatID}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch(`${url}/v1/proxy/${serviceName}/signature/${chatID}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -181,7 +179,7 @@ const ConversationVerification: React.FC<{
                   <h4 id="get-text">Get Signature</h4>
                   <pre>
                     <code>
-                      curl http://192.168.2.142:8080/v1/proxy/{serviceName}
+                      curl ${url}/v1/proxy/{serviceName}
                       /signature/
                       {selectedChatHistoryItemID
                         ? selectedChatHistoryItemID

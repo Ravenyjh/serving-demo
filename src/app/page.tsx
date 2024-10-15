@@ -1,3 +1,5 @@
+"use client";
+
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import {
   createZGServingUserBroker,
@@ -21,6 +23,7 @@ import Provider from "./provider";
 function App() {
   const [providerAddress, setProviderAddress] = useState<`0x${string}`>();
   const [serviceName, setServiceName] = useState<string>();
+  const [url, setUrl] = useState<string>();
   const [signerAddress, setSignerAddress] = useState<string>();
   const [userAccount, setAccount] = useState<AccountStructOutput>();
   const [chatHistory, setChatHistory] = useState<any[]>([]);
@@ -107,9 +110,10 @@ function App() {
           </div>
 
           <Service
-            onSelectService={(provider: `0x${string}`, name) => {
+            onSelectService={(provider: `0x${string}`, name, url) => {
               setProviderAddress(provider);
               setServiceName(name);
+              setUrl(url);
             }}
           />
 
@@ -118,6 +122,7 @@ function App() {
               setSignerAddress(signerAddress);
             }}
             serviceName={serviceName || ""}
+            url={url || ""}
           />
           <Account
             userAddress={account.addresses?.[0] || ""}
@@ -131,6 +136,7 @@ function App() {
             processor={processor}
             providerAddress={providerAddress || ""}
             serviceName={serviceName || ""}
+            url={url || ""}
             onChatHistory={(history: any[]) => {
               setChatHistory(history);
             }}
@@ -139,6 +145,7 @@ function App() {
           <ConversationVerification
             chatHistory={chatHistory}
             serviceName={serviceName || ""}
+            url={url || ""}
           />
         </div>
 

@@ -7,8 +7,9 @@ const PlayGround: React.FC<{
   processor: Promise<ZGServingUserBroker> | null;
   providerAddress: `0x${string}` | "";
   serviceName: string;
+  url: string;
   onChatHistory: (history: any[]) => void;
-}> = ({ processor, providerAddress, serviceName, onChatHistory }) => {
+}> = ({ processor, providerAddress, serviceName, url, onChatHistory }) => {
   // 4. ChatBot: refer to https://react-chatbotify.com/docs/examples/llm_conversation
   let modelType = "meta-llama/meta-llama-3.1-8b-instruct";
   let hasError = false;
@@ -19,7 +20,7 @@ const PlayGround: React.FC<{
   const call_openai = async (params: any) => {
     try {
       const openai = new OpenAI({
-        baseURL: `http://192.168.2.142:8080/v1/proxy/${serviceName}`,
+        baseURL: `${url}/v1/proxy/${serviceName}`,
         apiKey: "",
         dangerouslyAllowBrowser: true, // required for testing on browser side, not recommended
       });

@@ -3,19 +3,17 @@ import React, { useState } from "react";
 const SignerVerification: React.FC<{
   onSetSignerAddress: (address: string) => void;
   serviceName: string;
-}> = ({ onSetSignerAddress, serviceName }) => {
+  url: string;
+}> = ({ onSetSignerAddress, serviceName, url }) => {
   const [reportContentValue, setReportContentValue] = useState<string>();
 
   const handleDownloadReport = () => {
-    fetch(
-      `http://192.168.2.142:8080/v1/proxy/${serviceName}/attestation/report`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch(`${url}/v1/proxy/${serviceName}/attestation/report`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -81,8 +79,8 @@ const SignerVerification: React.FC<{
             </h3>
             <pre style={{ marginLeft: "25px" }}>
               <code>
-                curl -X GET http://192.168.2.142:8080/v1/proxy/
-                {serviceName}
+                curl -X GET {url || "${url}"}/v1/proxy/
+                {serviceName || "${serviceName}"}
                 /attestation/report
               </code>
               <div>

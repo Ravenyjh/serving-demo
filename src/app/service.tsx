@@ -1,9 +1,5 @@
-import {
-  useReadContract,
-} from "wagmi";
-import {
-  ServiceStructOutput,
-} from "@0glabs/0g-serving-broker";
+import { useReadContract } from "wagmi";
+import { ServiceStructOutput } from "@0glabs/0g-serving-broker";
 import React, { useEffect, useState } from "react";
 
 import { abi } from "./abi";
@@ -11,7 +7,7 @@ import { seringContractAddress } from "./config";
 
 const ServiceItem: React.FC<{
   service: ServiceStructOutput;
-  onSelect: (provider: `0x${string}`, serviceName: string) => void;
+  onSelect: (provider: `0x${string}`, serviceName: string, url: string) => void;
 }> = ({ service, onSelect }) => {
   return (
     <tr>
@@ -33,7 +29,11 @@ const ServiceItem: React.FC<{
       <td style={{ border: "1px solid black", padding: "8px" }}>
         <button
           onClick={() =>
-            onSelect(service.provider as `0x${string}`, service.name)
+            onSelect(
+              service.provider as `0x${string}`,
+              service.name,
+              service.url
+            )
           }
         >
           select
@@ -44,7 +44,7 @@ const ServiceItem: React.FC<{
 };
 
 const Service: React.FC<{
-  onSelectService: (provider: `0x${string}`, name: string) => void;
+  onSelectService: (provider: `0x${string}`, name: string, url: string) => void;
 }> = ({ onSelectService }) => {
   const [providerServices, setProviderServices] = useState<any[]>([]);
   const services = useReadContract({
@@ -59,8 +59,12 @@ const Service: React.FC<{
     }
   }, [services]);
 
-  const selectService = (providerAddress: `0x${string}`, service: string) => {
-    onSelectService(providerAddress, service);
+  const selectService = (
+    providerAddress: `0x${string}`,
+    service: string,
+    url: string
+  ) => {
+    onSelectService(providerAddress, service, url);
   };
 
   return (
