@@ -27,7 +27,7 @@ const Provider: React.FC = () => {
               alignItems: "left",
             }}
           >
-            <h1>Steps to Prepare a Service (Provider's Process) </h1>
+            <h1>Steps to Prepare a Service (Provider&apos;Process) </h1>
 
             <h2 style={{ alignSelf: "flex-start" }}>1. Prepare a Service</h2>
 

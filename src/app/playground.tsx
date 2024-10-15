@@ -2,7 +2,6 @@ import { ZGServingUserBroker } from "@0glabs/0g-serving-broker";
 import React, { useEffect, useState } from "react";
 import ChatBot from "react-chatbotify";
 import OpenAI from "openai";
-import { ChatCompletionCreateParamsBase } from "openai/resources/chat/completions.mjs";
 
 const PlayGround: React.FC<{
   processor: Promise<ZGServingUserBroker> | null;

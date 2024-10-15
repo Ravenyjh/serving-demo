@@ -1,32 +1,9 @@
-import {
-  Connector,
-  CreateConnectorFn,
-  useAccount,
-  useConnect,
-  useDisconnect,
-  useReadContract,
-} from "wagmi";
-import { readContract } from "@wagmi/core";
 
-import {
-  ZGServingUserBroker,
-  Config,
-  createZGServingUserBroker,
-  ServiceStructOutput,
-  AccountStructOutput,
-} from "@0glabs/0g-serving-broker";
-import { useEthersSigner } from "@/utils/ethers";
-import React, { useEffect, useReducer, useState } from "react";
-import ChatBot from "react-chatbotify";
-import OpenAI from "openai";
-import dayjs from "dayjs";
-import { abi } from "./abi";
-import { useWriteContract } from "wagmi";
-import { AddressLike } from "ethers";
-import { getConfig } from "@/wagmi";
-import Service from "./service";
-import { seringContractAddress } from "./config";
-import SignerVerification from "./signer-verification";
+
+
+
+
+import React from "react";
 
 const BackGround: React.FC = () => {
   return (
@@ -74,7 +51,7 @@ const BackGround: React.FC = () => {
             </li>
             <li>
               When a user wants to access a service, they need to deposit a
-              certain amount of funds into the provider's smart contract.
+              certain amount of funds into the provider&apos;smart contract.
             </li>
             <li>
               Users can send requests to the provider, and the provider decides
@@ -110,7 +87,7 @@ const BackGround: React.FC = () => {
           </p>
           <ol>
             <li>
-              The provider's inference service runs within a Trusted Execution
+              The provider&apos;inference service runs within a Trusted Execution
               Environment (TEE).
             </li>
             <li>
@@ -120,7 +97,7 @@ const BackGround: React.FC = () => {
               the user to obtain.
             </li>
             <li>
-              The provider's service responses are signed with the private key.
+              The provider&apos;service responses are signed with the private key.
             </li>
             <li>
               The user verifies the RA to ensure that the public key originates
@@ -186,10 +163,10 @@ const BackGround: React.FC = () => {
               <li>The Contract is deployed on the 0G blockchain.</li>
               <li>
                 The 0G Marketplace is a purely front-end platform, hosted by the
-                0G team, and runs in the customer's browser.
+                0G team, and runs in the customer&apos;browser.
               </li>
               <li>
-                The Provider Broker and LLM Service run on the provider's own
+                The Provider Broker and LLM Service run on the provider&apos;own
                 servers.
                 <ol>
                   <li>
@@ -220,7 +197,7 @@ const BackGround: React.FC = () => {
                   funds be deducted if successful.
                 </li>
               </ol>
-              <li>Control the Provider's service registration logic. </li>
+              <li>Control the Provider&apos;service registration logic. </li>
               <li>
                 Stores critical variables during the serving process, such as
                 account information (user address, provider address, balance,
@@ -237,7 +214,7 @@ const BackGround: React.FC = () => {
                 to, and requesting refunds from them.
               </li>
               <li>
-                Verifies the service's signer RA (the first step in service
+                Verifies the service&apos;signer RA (the first step in service
                 verification)
               </li>
               <li>
@@ -283,13 +260,13 @@ const BackGround: React.FC = () => {
               </strong>
             </p>
             <ol>
-              <li>Comply with OpenAI's API specifications</li>
+              <li>Comply with OpenAI&apos;API specifications</li>
               <li>
                 Integrates a signer within a TEE environment to sign every
                 response.
               </li>
               <li>
-                Provides an interface to download the signer key's RA (after
+                Provides an interface to download the signer key&apos;RA (after
                 registering the LLM Service, the Provider Broker will proxy this
                 interface).
               </li>

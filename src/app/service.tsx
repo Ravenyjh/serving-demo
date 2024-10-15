@@ -1,29 +1,12 @@
 import {
-  Connector,
-  CreateConnectorFn,
-  useAccount,
-  useConnect,
-  useDisconnect,
   useReadContract,
 } from "wagmi";
-import { readContract } from "@wagmi/core";
-
 import {
-  ZGServingUserBroker,
-  Config,
-  createZGServingUserBroker,
   ServiceStructOutput,
-  AccountStructOutput,
 } from "@0glabs/0g-serving-broker";
-import { useEthersSigner } from "@/utils/ethers";
-import React, { useEffect, useReducer, useState } from "react";
-import ChatBot from "react-chatbotify";
-import OpenAI from "openai";
-import dayjs from "dayjs";
+import React, { useEffect, useState } from "react";
+
 import { abi } from "./abi";
-import { useWriteContract } from "wagmi";
-import { AddressLike } from "ethers";
-import { getConfig } from "@/wagmi";
 import { seringContractAddress } from "./config";
 
 const ServiceItem: React.FC<{

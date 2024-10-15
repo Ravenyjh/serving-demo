@@ -1,31 +1,13 @@
-"use client";
-
+import { useAccount, useConnect, useDisconnect } from "wagmi";
 import {
-  Connector,
-  CreateConnectorFn,
-  useAccount,
-  useConnect,
-  useDisconnect,
-  useReadContract,
-} from "wagmi";
-import { readContract } from "@wagmi/core";
-
-import {
-  ZGServingUserBroker,
-  Config,
   createZGServingUserBroker,
-  ServiceStructOutput,
   AccountStructOutput,
+  ZGServingUserBroker,
 } from "@0glabs/0g-serving-broker";
+import React, { useEffect, useState } from "react";
+
 import { useEthersSigner } from "@/utils/ethers";
-import React, { useEffect, useReducer, useState } from "react";
-import ChatBot from "react-chatbotify";
-import OpenAI from "openai";
-import dayjs from "dayjs";
-import { abi } from "./abi";
-import { useWriteContract } from "wagmi";
-import { AddressLike } from "ethers";
-import { getConfig } from "@/wagmi";
+
 import Service from "./service";
 import { processorConfig, seringContractAddress } from "./config";
 import SignerVerification from "./signer-verification";
@@ -92,7 +74,7 @@ function App() {
             flexDirection: "column",
           }}
         >
-          <h1>Steps to Utilize a Service (User's Process) </h1>
+          <h1>Steps to Utilize a Service (User&apos;Process) </h1>
           {/* 1. Connect Wallet */}
           <div
             style={{

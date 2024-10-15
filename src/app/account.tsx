@@ -1,35 +1,18 @@
 "use client";
 
-import {
-  Connector,
-  CreateConnectorFn,
-  useAccount,
-  useConnect,
-  useDisconnect,
-  useReadContract,
-} from "wagmi";
-import { readContract } from "@wagmi/core";
 
+
+import { readContract } from "@wagmi/core";
 import {
-  ZGServingUserBroker,
-  Config,
-  createZGServingUserBroker,
-  ServiceStructOutput,
   AccountStructOutput,
 } from "@0glabs/0g-serving-broker";
-import { useEthersSigner } from "@/utils/ethers";
-import React, { useEffect, useReducer, useState } from "react";
-import ChatBot from "react-chatbotify";
-import OpenAI from "openai";
-import dayjs from "dayjs";
-import { abi } from "./abi";
+import React, { useState } from "react";
 import { useWriteContract } from "wagmi";
-import { AddressLike } from "ethers";
+
 import { getConfig } from "@/wagmi";
-import Service from "./service";
+
+import { abi } from "./abi";
 import { seringContractAddress } from "./config";
-import SignerVerification from "./signer-verification";
-import BackGround from "./background";
 
 const Account: React.FC<{
   userAddress: `0x${string}` | "";
