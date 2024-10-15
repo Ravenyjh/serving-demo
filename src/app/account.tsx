@@ -1,10 +1,10 @@
 "use client";
 
-
-
 import { readContract } from "@wagmi/core";
 import {
   AccountStructOutput,
+  createZKSigningKey,
+  ZGServingUserBroker,
 } from "@0glabs/0g-serving-broker";
 import React, { useState } from "react";
 import { useWriteContract } from "wagmi";
@@ -15,10 +15,11 @@ import { abi } from "./abi";
 import { seringContractAddress } from "./config";
 
 const Account: React.FC<{
+  processor: Promise<ZGServingUserBroker> | null;
   userAddress: `0x${string}` | "";
   providerAddress: `0x${string}` | "";
   onSetUserAccount: (account: AccountStructOutput) => void;
-}> = ({ userAddress, providerAddress, onSetUserAccount }) => {
+}> = ({ processor, userAddress, providerAddress, onSetUserAccount }) => {
   const [config] = useState(() => getConfig());
 
   // Create an Account
@@ -37,29 +38,33 @@ const Account: React.FC<{
     });
   };
 
-  interface KeyPair {
-    privkey: string[];
-    pubkey: string[];
+  interface ZKKeyPair {
+    privateKey: [bigint, bigint];
+    publicKey: [bigint, bigint];
   }
-  const host = "http://localhost:3000";
-  const generateKeyPair = async (): Promise<KeyPair> => {
-    const response = await fetch(host + "/sign-keypair");
-    const data = await response.json();
-    return data;
+  const generateKeyPair = async (): Promise<ZKKeyPair> => {
+    let zkKey = createZKSigningKey(providerAddress);
+    try {
+      return createZKSigningKey(providerAddress);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
+    }
+    return zkKey;
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const providerAddress = accountFormData.providerAddress as `0x${string}`;
 
-    const { privkey, pubkey } = await generateKeyPair();
-    console.log(pubkey);
-    console.log(accountFormData.balance);
+    const { privateKey, publicKey } = await generateKeyPair();
+    console.log("keep the privateKey in a safe place", privateKey);
     writeContract({
       address: seringContractAddress,
       abi,
       functionName: "addAccount",
-      args: [providerAddress, [BigInt(pubkey[0]), BigInt(pubkey[1])]],
+      args: [providerAddress, publicKey],
       value: BigInt(accountFormData.balance),
     });
   };

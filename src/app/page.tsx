@@ -125,6 +125,7 @@ function App() {
             url={url || ""}
           />
           <Account
+            processor={processor}
             userAddress={account.addresses?.[0] || ""}
             providerAddress={providerAddress || ""}
             onSetUserAccount={(account: AccountStructOutput) => {
