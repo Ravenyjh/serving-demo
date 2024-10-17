@@ -1,11 +1,7 @@
 "use client";
 
-
-
 import { readContract } from "@wagmi/core";
-import {
-  AccountStructOutput,
-} from "@0glabs/0g-serving-broker";
+import { AccountStructOutput } from "@0glabs/0g-serving-broker";
 import React, { useState } from "react";
 import { useWriteContract } from "wagmi";
 

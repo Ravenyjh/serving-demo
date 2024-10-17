@@ -5,13 +5,14 @@ import {
   createZGServingUserBroker,
   AccountStructOutput,
   ZGServingUserBroker,
+  ZGServingUserBrokerConfig,
 } from "@0glabs/0g-serving-broker";
 import React, { useEffect, useState } from "react";
 
 import { useEthersSigner } from "@/utils/ethers";
 
 import Service from "./service";
-import { processorConfig, seringContractAddress } from "./config";
+import { seringContractAddress } from "./config";
 import SignerVerification from "./signer-verification";
 import BackGround from "./background";
 import Account from "./account";
@@ -38,13 +39,17 @@ function App() {
   const signer = useEthersSigner();
 
   useEffect(() => {
+    const zGServingBrokerConfig: ZGServingUserBrokerConfig = {
+      dcapWasmPath: "/dcap-qvl-web_bg.wasm",
+    };
+
     if (account.status !== "connected" || !signer) {
       setProcessor(null);
     } else {
       const newProcessor = createZGServingUserBroker(
-        processorConfig,
         signer,
-        seringContractAddress
+        seringContractAddress,
+        zGServingBrokerConfig
       );
       setProcessor(newProcessor);
     }
@@ -121,6 +126,8 @@ function App() {
             onSetSignerAddress={(signerAddress: string) => {
               setSignerAddress(signerAddress);
             }}
+            processor={processor}
+            providerAddress={providerAddress || ""}
             serviceName={serviceName || ""}
             url={url || ""}
           />

@@ -19,13 +19,15 @@ const ConversationVerification: React.FC<{
     fee: string;
     req: string;
     res: string;
-  }> = ({ id, fee, req, res }) => {
+    valid: string;
+  }> = ({ id, fee, req, res, valid }) => {
     return (
       <tr>
         <td style={{ border: "1px solid black", padding: "8px" }}>{id}</td>
         <td style={{ border: "1px solid black", padding: "8px" }}>{fee}</td>
         <td style={{ border: "1px solid black", padding: "8px" }}>{req}</td>
         <td style={{ border: "1px solid black", padding: "8px" }}>{res}</td>
+        <td style={{ border: "1px solid black", padding: "8px" }}>{valid}</td>
         <td style={{ border: "1px solid black", padding: "8px" }}>
           <button onClick={() => setSelectedChatHistoryItemID(id)}>
             verify
@@ -121,6 +123,9 @@ const ConversationVerification: React.FC<{
                   res
                 </th>
                 <th style={{ border: "1px solid black", padding: "8px" }}>
+                  valid
+                </th>
+                <th style={{ border: "1px solid black", padding: "8px" }}>
                   select
                 </th>
               </tr>
@@ -134,6 +139,7 @@ const ConversationVerification: React.FC<{
                     fee={item.fee}
                     req={item.req}
                     res={item.res}
+                    valid={item.valid.toString()}
                   />
                 );
               })}
@@ -179,7 +185,7 @@ const ConversationVerification: React.FC<{
                   <h4 id="get-text">Get Signature</h4>
                   <pre>
                     <code>
-                      curl ${url}/v1/proxy/{serviceName}
+                      curl {url}/v1/proxy/{serviceName}
                       /signature/
                       {selectedChatHistoryItemID
                         ? selectedChatHistoryItemID

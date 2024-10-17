@@ -56,22 +56,24 @@ const PlayGround: React.FC<{
 
       await params.injectMessage(chatCompletion.choices[0].message.content);
 
-      await (
+      const valid = await (
         await processor
       )?.responseProcessor.processResponse(
         providerAddress || "",
         serviceName || "",
         chatCompletion.choices[0].message.content || "",
-        ""
+        chatCompletion.id
       );
 
       const history = chatHistory;
       history.push({
+        valid,
         id: chatCompletion.id,
         fee: headers?.["Fee"],
         req: JSON.stringify(req, null, 2),
         res: chatCompletion.choices[0].message.content,
       });
+
       console.log(history);
       setChatHistory(history);
       onChatHistory(history);

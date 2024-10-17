@@ -1,11 +1,31 @@
 import React, { useState } from "react";
+import {
+  ZGServingUserBroker,
+  SingerRAVerificationResult,
+} from "@0glabs/0g-serving-broker";
 
 const SignerVerification: React.FC<{
   onSetSignerAddress: (address: string) => void;
+  processor: Promise<ZGServingUserBroker> | null;
+  providerAddress: string;
   serviceName: string;
   url: string;
-}> = ({ onSetSignerAddress, serviceName, url }) => {
+}> = ({ onSetSignerAddress, processor, providerAddress, serviceName, url }) => {
   const [reportContentValue, setReportContentValue] = useState<string>();
+  const [verifiedResult, setVerifiedResult] =
+    useState<SingerRAVerificationResult>();
+
+  const handleGetAndVerify = async () => {
+    const result = await (
+      await processor
+    )?.verifier.getAndVerifySigningAddress(providerAddress, serviceName);
+
+    if (result) {
+      console.log("result", result);
+      onSetSignerAddress(result.signingAddress);
+      setVerifiedResult(result);
+    }
+  };
 
   const handleDownloadReport = () => {
     fetch(`${url}/v1/proxy/${serviceName}/attestation/report`, {
@@ -29,12 +49,10 @@ const SignerVerification: React.FC<{
           }
         }
         onSetSignerAddress(data.signing_address);
-        // reportContent.textContent = JSON.stringify(data, null, 2);
         setReportContentValue(JSON.stringify(data, null, 2));
       })
       .catch((error) => {
         setReportContentValue("Error: " + error.message);
-        // reportContent.textContent = "Error: " + error.message;
       });
   };
 
@@ -63,6 +81,29 @@ const SignerVerification: React.FC<{
               The marketplace backend automatically (a) downloads the
               attestation report (b) verify it in the background.
             </p>
+
+            <button
+              style={{
+                width: "150px",
+                marginTop: "20px",
+                marginRight: "10px",
+              }}
+              type="submit"
+              onClick={() => handleGetAndVerify()}
+            >
+              Try
+            </button>
+
+            <>
+              {verifiedResult ? (
+                <div id="verifiedResult">
+                  <h4>Signing Address:</h4>
+                  <div> {verifiedResult?.signingAddress}</div>
+                </div>
+              ) : (
+                ""
+              )}
+            </>
           </div>
 
           <h3 id="option-two">(b) Option Two</h3>
@@ -98,7 +139,6 @@ const SignerVerification: React.FC<{
 
                 <div id="reportResult">
                   <h3>Result:</h3>
-                  {/* <pre id="reportContent">No results yet.</pre> */}
                   <textarea
                     id="reportContent"
                     rows={4}
