@@ -1,38 +1,15 @@
 import { http, cookieStorage, createConfig, createStorage } from "wagmi";
 import { coinbaseWallet, injected, walletConnect } from "wagmi/connectors";
 
-// const zgTestnet = {
-//   blockExplorers: {
-//     default: {
-//       name: "0G Testnet",
-//       url: "https://0g-rpc-evm01.validatorvn.com",
-//       apiUrl: "",
-//     },
-//   },
-//   id: 16600,
-//   name: "0g Chain Testnet",
-//   nativeCurrency: {
-//     name: "A0GI",
-//     symbol: "A0GI",
-//     decimals: 18,
-//   },
-//   rpcUrls: {
-//     default: {
-//       http: ["https://0g-rpc-evm01.validatorvn.com"],
-//       ws: [""],
-//     },
-//   },
-// };
-
 const zgTestnet = {
   blockExplorers: {
     default: {
-      name: "Local Testnet",
-      url: "http://localhost:8545",
+      name: "0G Testnet",
+      url: "https://0g-json-rpc-public.originstake.com",
       apiUrl: "",
     },
   },
-  id: 31337,
+  id: 16600,
   name: "0g Chain Testnet",
   nativeCurrency: {
     name: "A0GI",
@@ -41,11 +18,34 @@ const zgTestnet = {
   },
   rpcUrls: {
     default: {
-      http: ["http://localhost:8545"],
+      http: ["https://0g-json-rpc-public.originstake.com"],
       ws: [""],
     },
   },
 };
+
+// const zgTestnet = {
+//   blockExplorers: {
+//     default: {
+//       name: "Local Testnet",
+//       url: "http://localhost:8545",
+//       apiUrl: "",
+//     },
+//   },
+//   id: 31337,
+//   name: "0g Chain Testnet",
+//   nativeCurrency: {
+//     name: "A0GI",
+//     symbol: "A0GI",
+//     decimals: 18,
+//   },
+//   rpcUrls: {
+//     default: {
+//       http: ["http://localhost:8545"],
+//       ws: [""],
+//     },
+//   },
+// };
 
 export function getConfig() {
   return createConfig({

@@ -115,6 +115,7 @@ function App() {
           </div>
 
           <Service
+            processor={processor}
             onSelectService={(provider: `0x${string}`, name, url) => {
               setProviderAddress(provider);
               setServiceName(name);
@@ -132,6 +133,7 @@ function App() {
             url={url || ""}
           />
           <Account
+            processor={processor}
             userAddress={account.addresses?.[0] || ""}
             providerAddress={providerAddress || ""}
             onSetUserAccount={(account: AccountStructOutput) => {
