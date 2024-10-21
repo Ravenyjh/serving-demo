@@ -1,9 +1,8 @@
-import { useReadContract } from "wagmi";
-import { ServiceStructOutput } from "@0glabs/0g-serving-broker";
-import React, { useEffect, useState } from "react";
-
-import { abi } from "./abi";
-import { seringContractAddress } from "./config";
+import {
+  ServiceStructOutput,
+  ZGServingUserBroker,
+} from "@0glabs/0g-serving-broker";
+import React, { useState } from "react";
 
 const ServiceItem: React.FC<{
   service: ServiceStructOutput;
@@ -44,20 +43,19 @@ const ServiceItem: React.FC<{
 };
 
 const Service: React.FC<{
+  processor: Promise<ZGServingUserBroker> | null;
   onSelectService: (provider: `0x${string}`, name: string, url: string) => void;
-}> = ({ onSelectService }) => {
+}> = ({ processor, onSelectService }) => {
   const [providerServices, setProviderServices] = useState<any[]>([]);
-  const services = useReadContract({
-    abi,
-    address: seringContractAddress,
-    functionName: "getAllServices",
-  })?.data;
 
-  useEffect(() => {
-    if (services) {
+  const handleSubmit = async () => {
+    try {
+      const services = await (await processor)?.accountProcessor.listService();
       setProviderServices((services as ServiceStructOutput[]) || []);
+    } catch (error) {
+      console.error(error);
     }
-  }, [services]);
+  };
 
   const selectService = (
     providerAddress: `0x${string}`,
@@ -80,6 +78,18 @@ const Service: React.FC<{
       >
         <h2 style={{ alignSelf: "flex-start" }}>2. List Services</h2>
 
+        <button
+          style={{
+            width: "150px",
+            marginTop: "20px",
+            marginBottom: "20px",
+            marginRight: "10px",
+          }}
+          type="submit"
+          onClick={() => handleSubmit()}
+        >
+          List Services
+        </button>
         <div>
           <table
             style={{

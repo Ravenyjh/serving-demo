@@ -1,26 +1,27 @@
 "use client";
 
-import { readContract } from "@wagmi/core";
-import { AccountStructOutput } from "@0glabs/0g-serving-broker";
+import {
+  AccountStructOutput,
+  ZGServingUserBroker,
+} from "@0glabs/0g-serving-broker";
 import React, { useState } from "react";
-import { useWriteContract } from "wagmi";
 
 import { getConfig } from "@/wagmi";
 
-import { abi } from "./abi";
-import { seringContractAddress } from "./config";
-
 const Account: React.FC<{
+  processor: Promise<ZGServingUserBroker> | null;
   userAddress: `0x${string}` | "";
   providerAddress: `0x${string}` | "";
   onSetUserAccount: (account: AccountStructOutput) => void;
-}> = ({ userAddress, providerAddress, onSetUserAccount }) => {
+}> = ({ processor, userAddress, providerAddress, onSetUserAccount }) => {
   const [config] = useState(() => getConfig());
 
-  // Create an Account
-  const { writeContract } = useWriteContract();
-
   const [accountFormData, setAccountFormData] = useState({
+    providerAddress: "",
+    balance: "",
+  });
+
+  const [chargeFormData, setTopUpFormData] = useState({
     providerAddress: "",
     balance: "",
   });
@@ -33,31 +34,39 @@ const Account: React.FC<{
     });
   };
 
-  interface KeyPair {
-    privkey: string[];
-    pubkey: string[];
-  }
-  const host = "http://localhost:3000";
-  const generateKeyPair = async (): Promise<KeyPair> => {
-    const response = await fetch(host + "/sign-keypair");
-    const data = await response.json();
-    return data;
+  const handleTopUpFormDataChange = (e: any) => {
+    const { name, value } = e.target;
+    setTopUpFormData({
+      ...chargeFormData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmitTopUp = async (e: any) => {
+    e.preventDefault();
+    const providerAddress = chargeFormData.providerAddress as `0x${string}`;
+
+    try {
+      console.log();
+      await (
+        await processor
+      )?.accountProcessor.depositFund(providerAddress, chargeFormData.balance);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const providerAddress = accountFormData.providerAddress as `0x${string}`;
 
-    const { privkey, pubkey } = await generateKeyPair();
-    console.log(pubkey);
-    console.log(accountFormData.balance);
-    writeContract({
-      address: seringContractAddress,
-      abi,
-      functionName: "addAccount",
-      args: [providerAddress, [BigInt(pubkey[0]), BigInt(pubkey[1])]],
-      value: BigInt(accountFormData.balance),
-    });
+    try {
+      await (
+        await processor
+      )?.accountProcessor.addAccount(providerAddress, accountFormData.balance);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const fetchAccountData = async (providerAddress: any) => {
@@ -65,17 +74,14 @@ const Account: React.FC<{
       return;
     }
     try {
-      const result = await readContract(config, {
-        abi,
-        address: seringContractAddress,
-        functionName: "getAccount",
-        args: [userAddress, providerAddress],
-      });
+      const result = await (
+        await processor
+      )?.accountProcessor.getAccount(userAddress, providerAddress);
       if (result) {
         onSetUserAccount(result as AccountStructOutput);
       }
     } catch (error) {
-      console.error("Error fetching account data", error);
+      console.error(error);
     }
   };
 
@@ -135,6 +141,54 @@ const Account: React.FC<{
             Submit
           </button>
         </form>
+
+        <h3 style={{ alignSelf: "flex-start" }}> Top up an Account</h3>
+
+        <form onSubmit={handleSubmitTopUp}>
+          <div>
+            <label
+              htmlFor="name"
+              style={{ display: "inline-block", width: "200px" }}
+            >
+              Provider Address:
+            </label>
+            <input
+              type="text"
+              id="providerAddress"
+              name="providerAddress"
+              value={chargeFormData.providerAddress}
+              onChange={handleTopUpFormDataChange}
+              required
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="balance"
+              style={{ display: "inline-block", width: "200px" }}
+            >
+              Balance:
+            </label>
+            <input
+              type="number"
+              id="balance"
+              name="balance"
+              value={chargeFormData.balance}
+              onChange={handleTopUpFormDataChange}
+              required
+            />
+          </div>
+          <button
+            style={{
+              width: "150px",
+              marginTop: "20px",
+              marginRight: "10px",
+            }}
+            type="submit"
+          >
+            Submit
+          </button>
+        </form>
+
         <button
           style={{ width: "150px", marginTop: "20px" }}
           onClick={() => fetchAccountData(providerAddress)}

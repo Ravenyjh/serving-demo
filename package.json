@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@0glabs/0g-serving-broker": "https://github.com/0glabs/0g-serving-user-broker.git",
     "@tanstack/react-query": "5.45.1",
     "@types/sinon": "^17.0.3",
     "@wagmi/core": "^2.13.8",
