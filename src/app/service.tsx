@@ -20,6 +20,9 @@ const ServiceItem: React.FC<{
         {service.url}
       </td>
       <td style={{ border: "1px solid black", padding: "8px" }}>
+        {service.model}
+      </td>
+      <td style={{ border: "1px solid black", padding: "8px" }}>
         {service.inputPrice.toString()}
       </td>
       <td style={{ border: "1px solid black", padding: "8px" }}>
@@ -108,6 +111,9 @@ const Service: React.FC<{
                 </th>
                 <th style={{ border: "1px solid black", padding: "8px" }}>
                   url
+                </th>
+                <th style={{ border: "1px solid black", padding: "8px" }}>
+                  model
                 </th>
                 <th style={{ border: "1px solid black", padding: "8px" }}>
                   inputPrice
