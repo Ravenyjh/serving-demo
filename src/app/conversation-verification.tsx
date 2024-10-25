@@ -54,7 +54,6 @@ const ConversationVerification: React.FC<{
         if (data.text) {
           try {
             const lines = data.text.split("\n");
-            console.log("lines", lines);
             if (lines.length !== 2) {
               throw new Error("text was not ok");
             }
@@ -64,7 +63,6 @@ const ConversationVerification: React.FC<{
             data.text = `${req}\n${res}`;
             data.req = JSON.stringify(req);
             data.res = JSON.stringify(res);
-            console.log("data", data);
           } catch (e) {
             console.error("Failed to parse text:", String(e));
           }
@@ -95,11 +93,11 @@ const ConversationVerification: React.FC<{
           validity of the dialogue in the background, but manual confirmation
           via a UI page is also supported)
         </p>
+        <h4>History</h4>
         <button style={{ width: "150px" }} onClick={forceUpdate}>
           Get History
         </button>
         <br />
-        <h4>History</h4>
         <div>
           <table
             style={{

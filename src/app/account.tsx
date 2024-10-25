@@ -47,7 +47,6 @@ const Account: React.FC<{
     const providerAddress = chargeFormData.providerAddress as `0x${string}`;
 
     try {
-      console.log();
       await (
         await processor
       )?.accountProcessor.depositFund(providerAddress, chargeFormData.balance);

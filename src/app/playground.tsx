@@ -3,15 +3,28 @@ import React, { useEffect, useState } from "react";
 import ChatBot from "react-chatbotify";
 import OpenAI from "openai";
 
+const modelMap: { [key: string]: string } = {
+  "llama-3.1-8B-Instruct": "meta-llama/meta-llama-3.1-8b-instruct",
+  "phi-3-mini-4k-instruct": "microsoft/phi-3-mini-4k-instruct",
+};
+
 const PlayGround: React.FC<{
   processor: Promise<ZGServingUserBroker> | null;
   providerAddress: `0x${string}` | "";
   serviceName: string;
   url: string;
+  modelType: string;
   onChatHistory: (history: any[]) => void;
-}> = ({ processor, providerAddress, serviceName, url, onChatHistory }) => {
+}> = ({
+  processor,
+  providerAddress,
+  serviceName,
+  url,
+  modelType,
+  onChatHistory,
+}) => {
   // 4. ChatBot: refer to https://react-chatbotify.com/docs/examples/llm_conversation
-  let modelType = "meta-llama/meta-llama-3.1-8b-instruct";
+  // let modelType = "meta-llama/meta-llama-3.1-8b-instruct";
   let hasError = false;
 
   const [chatHistory, setChatHistory] = useState<any[]>([]);
@@ -37,12 +50,12 @@ const PlayGround: React.FC<{
 
       const req = {
         messages: [{ role: "user", content: params.userInput }],
-        model: modelType,
+        model: modelMap[modelType],
       };
       const chatCompletion = await openai.chat.completions.create(
         {
           messages: [{ role: "user", content: params.userInput }],
-          model: modelType,
+          model: modelMap[modelType],
         },
         {
           headers: {
@@ -51,8 +64,6 @@ const PlayGround: React.FC<{
           },
         }
       );
-
-      console.log(JSON.stringify(chatCompletion));
 
       await params.injectMessage(chatCompletion.choices[0].message.content);
 
@@ -74,12 +85,10 @@ const PlayGround: React.FC<{
         res: chatCompletion.choices[0].message.content,
       });
 
-      console.log(history);
       setChatHistory(history);
       onChatHistory(history);
       await params.endStreamMessage();
     } catch (error) {
-      console.log(String(error));
       await params.injectMessage(String(error));
       hasError = true;
     }

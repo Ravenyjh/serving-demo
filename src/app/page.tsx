@@ -24,6 +24,7 @@ import Provider from "./provider";
 function App() {
   const [providerAddress, setProviderAddress] = useState<`0x${string}`>();
   const [serviceName, setServiceName] = useState<string>();
+  const [modelType, setModelType] = useState<string>();
   const [url, setUrl] = useState<string>();
   const [signerAddress, setSignerAddress] = useState<string>();
   const [userAccount, setAccount] = useState<AccountStructOutput>();
@@ -116,9 +117,15 @@ function App() {
 
           <Service
             processor={processor}
-            onSelectService={(provider: `0x${string}`, name, url) => {
+            onSelectService={(
+              provider: `0x${string}`,
+              name,
+              modelType,
+              url
+            ) => {
               setProviderAddress(provider);
               setServiceName(name);
+              setModelType(modelType);
               setUrl(url);
             }}
           />
@@ -146,6 +153,7 @@ function App() {
             providerAddress={providerAddress || ""}
             serviceName={serviceName || ""}
             url={url || ""}
+            modelType={modelType || ""}
             onChatHistory={(history: any[]) => {
               setChatHistory(history);
             }}

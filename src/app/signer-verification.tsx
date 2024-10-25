@@ -21,7 +21,6 @@ const SignerVerification: React.FC<{
     )?.verifier.getAndVerifySigningAddress(providerAddress, serviceName);
 
     if (result) {
-      console.log("result", result);
       onSetSignerAddress(result.signingAddress);
       setVerifiedResult(result);
     }
